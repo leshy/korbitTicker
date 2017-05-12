@@ -14,7 +14,7 @@ init env, (err,env) ->
 
   env.logger.outputs.push new logger3.Influx do
     connection: { database: 'korbit', host: 'rlog' }
-    tagFields: { +module, +app }
+    tagFields: { +module, +app, +metric }
 
   tick = -> 
     p.props do
@@ -24,9 +24,16 @@ init env, (err,env) ->
 
     .then ({korbit, bitstamp, exchange}) ->
       data = time: new Date().getTime(), diff: (1 - (bitstamp / (korbit / exchange))) * 100, exchange: exchange, korbitEUR: korbit / exchange, korbit: korbit, bitstamp: bitstamp
-      env.logger.log "diff is #{round(data.diff,2)}%, korbit: #{data.korbit} KRW, bitstamp: #{data.bitstamp} EUR, exchange rate: #{data.exchange}", data
-
+      
+      env.logger.log "diff #{round(data.diff,2)}%" { diff: diff, metric: 'diff' }
+      env.logger.log "korbit #{data.korbit / data.exchange} EUR" { korbit: korbit, metric: 'korbit' }
+      env.logger.log "bitstamp #{data.bitstamp} EUR" { bitstamp: bitstamp, metric: 'bitstamp' }
+      env.logger.log "exchange #{data.exchange}" { exchange: exchange, metric: 'exchange' }
+      
   setInterval tick, 60000
   tick()
+
+
+
 
 
