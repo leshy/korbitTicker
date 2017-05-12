@@ -25,10 +25,10 @@ init env, (err,env) ->
     .then ({korbit, bitstamp, exchange}) ->
       data = time: new Date().getTime(), diff: (1 - (bitstamp / (korbit / exchange))) * 100, exchange: exchange, korbitEUR: korbit / exchange, korbit: korbit, bitstamp: bitstamp
       
-      env.logger.log "diff #{round(data.diff,2)}%" { diff: data.diff, metric: 'diff' }
-      env.logger.log "korbit #{data.korbit / data.exchange} EUR" { korbit: data.korbit, metric: 'korbit' }
-      env.logger.log "bitstamp #{data.bitstamp} EUR" { bitstamp: data.bitstamp, metric: 'bitstamp' }
-      env.logger.log "exchange #{data.exchange}" { exchange: data.exchange, metric: 'exchange' }
+      env.logger.log "diff #{round(data.diff,2)}%" { diff: data.diff, metric: 'diff' }, metric: 'diff'
+      env.logger.log "korbit #{data.korbit / data.exchange} EUR" { last: data.korbit, }, metric: 'korbit'
+      env.logger.log "bitstamp #{data.bitstamp} EUR" { last: data.bitstamp }, metric: 'bitstamp'
+      env.logger.log "exchange #{data.exchange}" { exchange: data.exchange }, metric: 'exchange'
       
   setInterval tick, 60000
   tick()
