@@ -38,7 +38,7 @@ init env, (err,env) ->
       eurDrop = bids[0][0] - bids[bids.length - 1][0]
       depth = (btcDrop / eurDrop)
       eurDiff = (korbit / exchange) - bitstamp
-      depth = { btcDrop: btcDrop, eurDrop: eurDrop, depth: depth, eurDiff: eurDiff, dropOne: ( depth * eurDiff ), dropAll: ( eurDiff * depth * eurDiff )  }
+      depth = { btcDrop: btcDrop, eurDrop: eurDrop, depth: depth, eurDiff: eurDiff, dropOne: ( depth * eurDiff ), dropAll: ( Math.round(eurDiff * depth * eurDiff) )  }
       env.logger.log JSON.stringify(depth), depth
       env.logger.log "diff #{round(data.diff,2)}%" { diff: data.diff, metric: 'diff' }, metric: 'diff'
       env.logger.log "korbit #{data.korbit / data.exchange} EUR" { korbit: data.korbit, last: data.korbit / data.exchange, }, metric: 'korbit'
