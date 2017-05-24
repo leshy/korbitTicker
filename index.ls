@@ -13,7 +13,7 @@ init env, (err,env) ->
   env.logger.addTags pid: process.pid, app: "korbitTicker"
 
   env.logger.outputs.push new logger3.Influx do
-    connection: { database: 'korbit', host: 'rlog' }
+    connection: { database: 'korbit', host: 'localhost' }
     tagFields: { +module, +app, +metric }
 
   tick = -> 
