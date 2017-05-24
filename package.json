@@ -15,6 +15,7 @@
     "immutable": "^3.8.1",
     "leshdash": "git://github.com/leshy/leshdash.git",
     "logger3": "git://github.com/leshy/logger3.git",
+    "request": "^2.81.0",
     "request-promise": "^4.2.1",
     "ribcage": "git://github.com/leshy/ribcage.git",
     "ribcage_logger": "git://github.com/leshy/ribcage_logger.git"

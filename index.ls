@@ -19,9 +19,17 @@ init env, (err,env) ->
   tick = -> 
     p.props do
       orderbook: request.get('https://api.korbit.co.kr/v1/orderbook?category=bid').then -> JSON.parse(it)
+      
       korbit: request.get('https://api.korbit.co.kr/v1/ticker').then -> Number JSON.parse(it).last
+      
+      korbitEth: request.get('https://api.korbit.co.kr/v1/ticker?currency_pair=eth_krw').then -> Number JSON.parse(it).last
+      
       bitstamp: request.get('https://www.bitstamp.net/api/v2/ticker/btceur/').then -> Number JSON.parse(it).last
+      
+      poloniex: request.get('https://poloniex.com/public?command=returnTicker').then -> Number JSON.parse(it).last
+      
       exchange: request.get('https://api.fixer.io/latest').then -> Number JSON.parse(it).rates.KRW
+      
     .then ({korbit, bitstamp, exchange, orderbook}) ->
       data = time: new Date().getTime(), diff: (1 - (bitstamp / (korbit / exchange))) * 100, exchange: exchange, korbitEUR: korbit / exchange, korbit: korbit, bitstamp: bitstamp
 
